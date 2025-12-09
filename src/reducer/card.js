@@ -1,25 +1,9 @@
-// export const cardReducer = (state = [], action) => {
-//   switch(action.type) {
-//     case "":
-     ;
 
-//     case "cart/modifyQuantity":
-      
-
-//     case "":
-//       
-
-//     case "":
-//       
-
-//     default:
-//       return state;
-//   }
-// };
 import { createReducer } from "@reduxjs/toolkit";
+import { addToCart,modifyQuantity,clearCart,removeProduct } from "../createAction/cartCreateAction";
 export const CartReducer=createReducer([],(builder)=>{
   builder
-  .addCase('card/addToCart',(state,action)=>{
+  .addCase(addToCart,(state,action)=>{
      const product = state.find(item => item.id === action.payload.id);
       if(product){
         return state.map(item =>
@@ -35,17 +19,17 @@ export const CartReducer=createReducer([],(builder)=>{
         }
       ]
   })
-  .addCase('cart/modifyQuantity',(state,action)=>{
+  .addCase(modifyQuantity,(state,action)=>{
     return state.map(item =>
         item.id === action.payload.id
           ? { ...item, quantity: Number(action.payload.quantity) }
           : item
       );
   })
-  .addCase('cart/removeProduct',(state,action)=>{
+  .addCase(clearCart,(state,action)=>{
 return state.filter(item => item.id !== action.payload);
   })
-  .addCase('cart/clearCart',(state,action)=>{
+  .addCase(removeProduct,(state,action)=>{
 return [];
   })
 })
