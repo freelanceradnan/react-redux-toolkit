@@ -1,7 +1,26 @@
-export const cardReducer = (state = [], action) => {
-  switch(action.type) {
-    case "card/addToCart":
-      const product = state.find(item => item.id === action.payload.id);
+// export const cardReducer = (state = [], action) => {
+//   switch(action.type) {
+//     case "":
+     ;
+
+//     case "cart/modifyQuantity":
+      
+
+//     case "":
+//       
+
+//     case "":
+//       
+
+//     default:
+//       return state;
+//   }
+// };
+import { createReducer } from "@reduxjs/toolkit";
+export const CartReducer=createReducer([],(builder)=>{
+  builder
+  .addCase('card/addToCart',(state,action)=>{
+     const product = state.find(item => item.id === action.payload.id);
       if(product){
         return state.map(item =>
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
@@ -14,22 +33,20 @@ export const cardReducer = (state = [], action) => {
           quantity: 1,
           price: Number(action.payload.price)
         }
-      ];
-
-    case "cart/modifyQuantity":
-      return state.map(item =>
+      ]
+  })
+  .addCase('cart/modifyQuantity',(state,action)=>{
+    return state.map(item =>
         item.id === action.payload.id
           ? { ...item, quantity: Number(action.payload.quantity) }
           : item
       );
-
-    case "cart/removeProduct":
-      return state.filter(item => item.id !== action.payload);
-
-    case "cart/clearCart":
-      return [];
-
-    default:
-      return state;
-  }
-};
+  })
+  .addCase('cart/removeProduct',(state,action)=>{
+return state.filter(item => item.id !== action.payload);
+  })
+  .addCase('cart/clearCart',(state,action)=>{
+return [];
+  })
+})
+export default CartReducer
